@@ -19,27 +19,36 @@ class PlacesListScreen extends StatelessWidget {
               icon: const Icon(Icons.add))
         ],
       ),
-      body: Consumer<PlacesProvider>(
-        builder: (ctx, placeProvider, child) {
-          final list = placeProvider.list;
-          if (placeProvider.list.isNotEmpty) {
-            return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (c, i) => ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: FileImage(list[i].image),
-                ),
-                title: Text(list[i].title),
+      body: FutureBuilder(
+          future: Provider.of<PlacesProvider>(context, listen: false).getPlaces(),
+          builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Consumer<PlacesProvider>(
+              builder: (ctx, placeProvider, child) {
+                final list = placeProvider.list;
+                if (placeProvider.list.isNotEmpty) {
+                  return ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (c, i) => ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: FileImage(list[i].image),
+                      ),
+                      title: Text(list[i].title),
+                    ),
+                  );
+                } else {
+                  return child!;
+                }
+              },
+              child: const Center(
+                child: Text('Sayohat joylari mavjud emas, iltimos qo\'shing!'),
               ),
             );
-          } else {
-            return child!;
-          }
-        },
-        child: const Center(
-          child: Text('Sayohat joylari mavjud emas, iltimos qo\'shing!'),
-        ),
-      ),
+          }),
     );
   }
 }

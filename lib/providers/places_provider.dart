@@ -5,7 +5,7 @@ import 'package:module_13_part_2/database/place_db.dart';
 import 'package:module_13_part_2/models/place_model.dart';
 
 class PlacesProvider with ChangeNotifier {
-  final List<Place> _list = [];
+  List<Place> _list = [];
 
   List<Place> get list {
     return [..._list];
@@ -27,5 +27,25 @@ class PlacesProvider with ChangeNotifier {
       'title': newPlace.title,
       'image': newPlace.image.path,
     });
+  }
+
+  Future<void> getPlaces() async {
+    PlaceLocation location =
+        PlaceLocation(latitude: "1", longitude: "1", address: "UZB");
+
+    final placesList = await PlacesDB.getData('user_places');
+    _list = placesList
+        .map(
+          (place) => Place(
+            id: place['id'],
+            title: place['title'],
+            location: location,
+            image: File(
+              place['image'],
+            ),
+          ),
+        )
+        .toList();
+    notifyListeners();
   }
 }
