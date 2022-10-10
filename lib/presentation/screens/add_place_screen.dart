@@ -35,56 +35,59 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Sayohat Joyini Qo\'shish'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Manzil nomini kiriting',
-                            border: OutlineInputBorder()),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Iltimos, joy nomini kiriting!';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _title = value!;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      ImageInput(_takeSavedImage),
-                      const SizedBox(height: 20),
-                      const LocationInput()
-                    ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: const Text('Sayohat Joyini Qo\'shish'),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(
+                              labelText: 'Manzil nomini kiriting',
+                              border: OutlineInputBorder()),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Iltimos, joy nomini kiriting!';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _title = value!;
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        ImageInput(_takeSavedImage),
+                        const SizedBox(height: 20),
+                        const LocationInput()
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: _submit,
-            style: ElevatedButton.styleFrom(
-                elevation: 0,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsets.symmetric(vertical: 15)),
-            child: const Text('Qo\'shish'),
-          ),
-        ],
+            ElevatedButton(
+              onPressed: _submit,
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  padding: const EdgeInsets.symmetric(vertical: 15)),
+              child: const Text('Qo\'shish'),
+            ),
+          ],
+        ),
       ),
     );
   }
