@@ -18,6 +18,14 @@
 	<string>Kameraga ruxsat bering!</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Mikrafonga ruxsat bering!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Manzilni olishga ruxsat bering!</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Mikrafonga ruxsat bering!</string>
+	<key>EnableBackgroundLocationUpdates</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<string>Manzil</string>
 	<key>CFBundleName</key>
 	<string>module_13_part_2</string>
 	<key>CFBundlePackageType</key>
