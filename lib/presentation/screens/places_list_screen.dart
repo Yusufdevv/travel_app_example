@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:module_13_part_2/presentation/screens/add_place_screen.dart';
+import 'package:module_13_part_2/presentation/screens/place_details_screen.dart';
 import 'package:module_13_part_2/providers/places_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,8 @@ class PlacesListScreen extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-          future: Provider.of<PlacesProvider>(context, listen: false).getPlaces(),
+          future:
+              Provider.of<PlacesProvider>(context, listen: false).getPlaces(),
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -34,6 +36,11 @@ class PlacesListScreen extends StatelessWidget {
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (c, i) => ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, PlaceDetailsScreen.routeName,
+                            arguments: list[i].id);
+                      },
                       leading: CircleAvatar(
                         backgroundImage: FileImage(list[i].image),
                       ),

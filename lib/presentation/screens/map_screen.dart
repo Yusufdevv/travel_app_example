@@ -42,11 +42,14 @@ class _MapScreenState extends State<MapScreen> {
         myLocationEnabled: true,
         zoomControlsEnabled: false,
         onTap: widget.isSelecting ? getLocation : (LatLng lantlng) {},
-        markers: _pickedLocation == null
+        markers: widget.isSelecting && _pickedLocation == null
             ? {}
             : {
                 Marker(
-                    markerId: const MarkerId('1'), position: _pickedLocation!)
+                    markerId: const MarkerId('1'),
+                    position: _pickedLocation ??
+                        LatLng(widget.placeLocation.latitude,
+                            widget.placeLocation.longitude))
               },
         initialCameraPosition: CameraPosition(
           zoom: 15,
