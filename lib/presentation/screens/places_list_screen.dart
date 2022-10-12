@@ -38,6 +38,7 @@ class PlacesListScreen extends StatelessWidget {
                         backgroundImage: FileImage(list[i].image),
                       ),
                       title: Text(list[i].title),
+                      subtitle: Text(list[i].location.address),
                     ),
                   );
                 } else {
