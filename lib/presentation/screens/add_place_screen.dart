@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:module_13_part_2/models/place_model.dart';
 import 'package:module_13_part_2/presentation/widgets/image_input.dart';
 import 'package:module_13_part_2/presentation/widgets/location_input.dart';
 import 'package:module_13_part_2/providers/places_provider.dart';
@@ -18,17 +19,25 @@ class AddPlaceScreen extends StatefulWidget {
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   File? _savedImage;
   String _title = '';
+  PlaceLocation? _placeLocation;
   final _formKey = GlobalKey<FormState>();
 
   void _takeSavedImage(savedImage) {
     _savedImage = savedImage;
   }
 
+  void _takePickedLocation(double latitude, double longitude, String address) {
+    _placeLocation = PlaceLocation(
+        latitude: latitude, longitude: longitude, address: address);
+  }
+
   void _submit() {
-    if (_formKey.currentState!.validate() && _savedImage != null) {
+    if (_formKey.currentState!.validate() &&
+        _savedImage != null &&
+        _placeLocation != null) {
       _formKey.currentState!.save();
       Provider.of<PlacesProvider>(context, listen: false)
-          .addPlace(_title, _savedImage!);
+          .addPlace(_title, _savedImage!, _placeLocation!);
       Navigator.pop(context);
     }
   }
@@ -60,7 +69,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                               border: OutlineInputBorder()),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Iltimos, joy nomini kiriting!';
+                              return 'Iltimos, Manzil nomini kiriting!';
                             }
                             return null;
                           },
@@ -71,7 +80,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                         const SizedBox(height: 20),
                         ImageInput(_takeSavedImage),
                         const SizedBox(height: 20),
-                        const LocationInput()
+                        LocationInput(_takePickedLocation)
                       ],
                     ),
                   ),

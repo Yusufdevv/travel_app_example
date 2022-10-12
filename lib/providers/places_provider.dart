@@ -11,13 +11,12 @@ class PlacesProvider with ChangeNotifier {
     return [..._list];
   }
 
-  void addPlace(String title, File image) {
-    PlaceLocation location =
-        PlaceLocation(latitude: "1", longitude: "1", address: "UZB");
+  void addPlace(String title, File image, PlaceLocation placeLocation) {
+    
     Place newPlace = Place(
         id: UniqueKey().toString(),
         title: title,
-        location: location,
+        location: placeLocation,
         image: image);
     _list.add(newPlace);
     notifyListeners();
@@ -31,7 +30,7 @@ class PlacesProvider with ChangeNotifier {
 
   Future<void> getPlaces() async {
     PlaceLocation location =
-        PlaceLocation(latitude: "1", longitude: "1", address: "UZB");
+        PlaceLocation(latitude: 1, longitude: 1, address: "UZB");
 
     final placesList = await PlacesDB.getData('user_places');
     _list = placesList
